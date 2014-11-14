@@ -60,7 +60,7 @@ for (var year = 0; year < elecYears.length; year++)
 /*
  * Gas
  */
- log.info("Processing gas meter records");
+log.info("Processing gas meter records");
 var gasTable = document.getElementById(GAS_TABLE_ID);
 var gasYears = gasTable.querySelector('ul').children;
 log.info("Found " + gasYears.length + " years");
