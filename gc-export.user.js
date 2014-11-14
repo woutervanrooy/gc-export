@@ -20,24 +20,32 @@ var view = document.getElementById('ctl00_ctl00_Content_ContentRightPlaceholder_
 SetView(view,'meterstanden');
 
 var elecTable = document.getElementById(ELEC_TABLE_ID);
+var elecYears = elecTable.querySelector('ul').children;
+log.info("Found " + elecYears.length + " years");
 
-var elecMonths = elecTable.querySelectorAll('ul');
-log.info("Found " + elecMonths.length + " months");
-
-for (var i = 0; i < elecMonths.length; i ++)
+for (var year = 0; year < elecYears.length; year++)
 {
-	var records = elecMonths[i].querySelectorAll('div.row, div.alternating-row');
-	log.info("Found " + records.length + " records for month " + i);
+	var elecYear = elecYears[year];
+	var elecMonths = elecYear.querySelectorAll('ul');
+	log.info("Found " + elecMonths.length + " months for year " + year);
 	
-	for (var j = 0; j < records.length; j++)
+	for (var month = 0; month < elecMonths.length; month++)
 	{
-		var fields = records[j].childNodes;
+		var elecMonth = elecMonths[month];
+		var elecRecords = elecMonth.querySelectorAll('div.row, div.alternating-row');
+		log.info("Found " + elecRecords.length + " records for month " + month);
+	
+		for (var record = 0; record < elecRecords.length; record++)
+		{
+			var elecRecord = elecRecords[record];
+			var fields = elecRecord.querySelectorAll('div.cell');
 		
-		var date	= fields[1].innerHTML;
-		var rec_hi	= fields[3].innerHTML;
-		var rec_lo	= fields[5].innerHTML;
-		var remarks	= fields[7].innerHTML;
+			var date	= fields[0].innerHTML;
+			var rec_hi	= fields[1].innerHTML;
+			var rec_lo	= fields[2].innerHTML;
+			var remarks	= fields[3].innerHTML;
 		
-		log.info("Found record. Date: " + date + " High: " + rec_hi + " Low: " + rec_lo + " Remarks: " + remarks);
+			log.info("Found record. Date: " + date + " High: " + rec_hi + " Low: " + rec_lo + " Remarks: " + remarks);
+		}
 	}
 }
