@@ -31,10 +31,10 @@ Now search for the Tampermonkey entry and enable the **"Allow access to file URI
 ![Tutorial](http://tampermonkey.net/images/animated/allow_access_to_file_urls.gif)
 
 ### Install user script from local source
-[Clone](http://gitlab.huntfield35.nl/axon/pech) or [download](http://gitlab.huntfield35.nl/axon/pech/branches) the files to your computer. The *release/v\#.\#* branch provide a stable version of the script. When you want bleeding edge features and lots of bugs, you can choose to use the *develop* branch.
-The easiest way to install the user script in your preferred browser is to drag and drop the **pech.user.js** file in the browser. Due to its extension, the user script manager will be triggered and asks you whether you want to (re)install the user script.
+[Clone](https://dev.nullpointer.nl/energy/gc-export) or [download](https://dev.nullpointer.nl/energy/gc-export/branches) the files to your computer. The *release/v\#.\#* branch provide a stable version of the script. When you want bleeding edge features and lots of bugs, you can choose to use the *develop* branch.
+The easiest way to install the user script in your preferred browser is to drag and drop the **gc-export.user.js** file in the browser. Due to its extension, the user script manager will be triggered and asks you whether you want to (re)install the user script.
 
 ### Install user script from repository
-Click the following link to directly install the PECH user script in your browser:
+Click the following link to directly install the GC-Export user script in your browser:
 
 * [Development version](https://dev.nullpointer.nl/energy/gc-export/blob/develop/gc-export.user.js)
