@@ -4,14 +4,18 @@
 // @author      Wouter van Rooy
 // @version     2014.11.14
 // @description This user script helps you export the meter records from your personal GreenChoice file.
-// @match       https://dossier.greenchoice.nl/Mijn-Dossier/Mijn-verbruik.aspx
+// @match       https://dossier.greenchoice.nl/Mijn-Dossier/Mijn-verbruik.aspx*
 // @copyright   2014, Wouter van Rooy
 // @require     https://raw.githubusercontent.com/pimterry/loglevel/master/dist/loglevel.min.js
 // ==/UserScript==
 
 var TAB_VIEW_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenLi';
+var TAB_RECORD_VIEW_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenView';
 var ELEC_TABLE_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenUserControl_GeordendStandenOverzichtStroom';
 var GAS_TABLE_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenUserControl_GeordendStandenoverzichtGas';
+
+var export_button = document.createElement('a');
+export_button.innerHTML = '<a id="ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenUserControl_ExporterenHyperlink" class="action_button_right xxxl meterstanden_doorgeven_button align_button_middle" href="#">Exporteren</a>'
 
 log.setLevel( "trace" );
 //log.setLevel("silent");
@@ -90,3 +94,9 @@ for (var year = 0; year < gasYears.length; year++)
 		}
 	}
 }
+
+/*
+ * Add export button
+ */
+var update_records_button = document.querySelector('a.meterstanden_doorgeven_button');
+update_records_button.parentNode.insertBefore(export_button, update_records_button);
