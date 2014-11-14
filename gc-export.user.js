@@ -19,6 +19,10 @@ log.setLevel( "trace" );
 var view = document.getElementById('ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenLi');
 SetView(view,'meterstanden');
 
+/*
+ * Electricity
+ */
+log.info("Processing electricity meter records");
 var elecTable = document.getElementById(ELEC_TABLE_ID);
 var elecYears = elecTable.querySelector('ul').children;
 log.info("Found " + elecYears.length + " years");
@@ -45,7 +49,41 @@ for (var year = 0; year < elecYears.length; year++)
 			var rec_lo	= fields[2].innerHTML;
 			var remarks	= fields[3].innerHTML;
 		
-			log.info("Found record. Date: " + date + " High: " + rec_hi + " Low: " + rec_lo + " Remarks: " + remarks);
+			log.info("Date: " + date + " High: " + rec_hi + " Low: " + rec_lo + " Remarks: " + remarks);
+		}
+	}
+}
+
+/*
+ * Gas
+ */
+ log.info("Processing gas meter records");
+var gasTable = document.getElementById(GAS_TABLE_ID);
+var gasYears = gasTable.querySelector('ul').children;
+log.info("Found " + gasYears.length + " years");
+
+for (var year = 0; year < gasYears.length; year++)
+{
+	var gasYear = gasYears[year];
+	var gasMonths = gasYear.querySelectorAll('ul');
+	log.info("Found " + gasMonths.length + " months for year " + year);
+	
+	for (var month = 0; month < gasMonths.length; month++)
+	{
+		var gasMonth = gasMonths[month];
+		var gasRecords = gasMonth.querySelectorAll('div.row, div.alternating-row');
+		log.info("Found " + gasRecords.length + " records for month " + month);
+	
+		for (var record = 0; record < gasRecords.length; record++)
+		{
+			var gasRecord = gasRecords[record];
+			var fields = gasRecord.querySelectorAll('div.cell');
+		
+			var date	= fields[0].innerHTML;
+			var rec	 	= fields[1].innerHTML;
+			var remarks	= fields[2].innerHTML;
+		
+			log.info("Date: " + date + " Record: " + rec + " Remarks: " + remarks);
 		}
 	}
 }
