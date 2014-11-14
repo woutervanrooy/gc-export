@@ -9,14 +9,17 @@
 // @require     https://raw.githubusercontent.com/pimterry/loglevel/master/dist/loglevel.min.js
 // ==/UserScript==
 
+var TAB_VIEW_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenLi';
 var ELEC_TABLE_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenUserControl_GeordendStandenOverzichtStroom';
 var GAS_TABLE_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenUserControl_GeordendStandenoverzichtGas';
 
 log.setLevel( "trace" );
 //log.setLevel("silent");
 
-
-var view = document.getElementById('ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenLi');
+/*
+ * Switch view to meter record history
+ */
+var view = document.getElementById('TAB_VIEW_ID');
 SetView(view,'meterstanden');
 
 /*
