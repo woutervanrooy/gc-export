@@ -14,22 +14,22 @@ const GAS_TABLE_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenUs
 var csv_electricity = '';
 var csv_gas = '';
 
-function download(filename, text)
+function downloadCSV(filename, text)
 {
     var pom = document.createElement('a');
-    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    pom.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(text));
     pom.setAttribute('download', filename);
     pom.click();
 }
 
 function OnElecExportLinkClick()
 {
-    download('electricity.csv', csv_electricity);
+    downloadCSV('electricity.csv', csv_electricity);
 }
 
 function OnGasExportLinkClick()
 {
-    download('gas.csv', csv_gas);
+    downloadCSV('gas.csv', csv_gas);
 }
 
 /*
@@ -47,29 +47,29 @@ function ParseElecTable()
         var elecYear = elecYears[year];
         var elecMonths = elecYear.querySelectorAll('ul');
         GM_log("Found " + elecMonths.length + " months for year " + year);
-    
+
         for (var month = 0; month < elecMonths.length; month++)
         {
             var elecMonth = elecMonths[month];
             var elecRecords = elecMonth.querySelectorAll('div.row, div.alternating-row');
             GM_log("Found " + elecRecords.length + " records for month " + month);
-    
+
             for (var record = 0; record < elecRecords.length; record++)
             {
                 var elecRecord = elecRecords[record];
                 var fields = elecRecord.querySelectorAll('div.cell');
-        
+
                 var date    = fields[0].innerHTML;
                 var rec_hi  = fields[1].innerHTML;
                 var rec_lo  = fields[2].innerHTML;
                 var remarks = fields[3].innerHTML;
-            
+
                 csv_electricity += date + ',' + rec_hi + ',' + rec_lo + ',' + remarks + '\n';
                 GM_log("Date: " + date + " High: " + rec_hi + " Low: " + rec_lo + " Remarks: " + remarks);
             }
         }
     }
-    
+
     // Add export link
     var elecExportLink = document.createElement('a');
     elecExportLink.innerHTML = 'Exporteren';
@@ -92,28 +92,28 @@ function ParseGasTable()
         var gasYear = gasYears[year];
         var gasMonths = gasYear.querySelectorAll('ul');
         GM_log("Found " + gasMonths.length + " months for year " + year);
-    
+
         for (var month = 0; month < gasMonths.length; month++)
         {
             var gasMonth = gasMonths[month];
             var gasRecords = gasMonth.querySelectorAll('div.row, div.alternating-row');
             GM_log("Found " + gasRecords.length + " records for month " + month);
-    
+
             for (var record = 0; record < gasRecords.length; record++)
             {
                 var gasRecord = gasRecords[record];
                 var fields = gasRecord.querySelectorAll('div.cell');
-        
+
                 var date    = fields[0].innerHTML;
                 var rec     = fields[1].innerHTML;
                 var remarks = fields[2].innerHTML;
-            
+
                 csv_gas += date + ',' + rec + ',' + remarks + '\n';
                 GM_log("Date: " + date + " Record: " + rec + " Remarks: " + remarks);
             }
         }
     }
-    
+
     // Add export link
     var gasExportLink = document.createElement('a');
     gasExportLink.innerHTML = 'Exporteren';
