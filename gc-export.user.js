@@ -14,11 +14,32 @@ var TAB_RECORD_VIEW_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_Meterstand
 var ELEC_TABLE_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenUserControl_GeordendStandenOverzichtStroom';
 var GAS_TABLE_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenUserControl_GeordendStandenoverzichtGas';
 
+var csv_electricity = '';
+var csv_gas = '';
+
 var export_button = document.createElement('a');
 export_button.innerHTML = '<a id="ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenUserControl_ExporterenHyperlink" class="action_button_right xxxl meterstanden_doorgeven_button align_button_middle" href="#">Exporteren</a>'
 
 log.setLevel( "trace" );
 //log.setLevel("silent");
+
+function download(filename, text)
+{
+	var pom = document.createElement('a');
+	pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+	pom.setAttribute('download', filename);
+	pom.click();
+}
+
+function OnElecExportLinkClick(event)
+{
+	download('electricity.csv', csv_electricity);
+}
+
+function OnGasExportLinkClick(event)
+{
+	download('gas.csv', csv_gas);
+}
 
 /*
  * Switch view to meter record history
@@ -55,11 +76,18 @@ for (var year = 0; year < elecYears.length; year++)
 			var rec_hi	= fields[1].innerHTML;
 			var rec_lo	= fields[2].innerHTML;
 			var remarks	= fields[3].innerHTML;
-		
+			
+			csv_electricity += date + ',' + rec_hi + ',' + rec_lo + ',' + remarks + '\n';
 			log.info("Date: " + date + " High: " + rec_hi + " Low: " + rec_lo + " Remarks: " + remarks);
 		}
 	}
 }
+
+var elecExportLink = document.createElement('a');
+elecExportLink.innerHTML = 'Exporteren';
+elecExportLink.addEventListener('click', OnElecExportLinkClick);
+elecTable.querySelector('div.main').appendChild(elecExportLink);
+
 
 /*
  * Gas
@@ -89,14 +117,14 @@ for (var year = 0; year < gasYears.length; year++)
 			var date	= fields[0].innerHTML;
 			var rec	 	= fields[1].innerHTML;
 			var remarks	= fields[2].innerHTML;
-		
+			
+			csv_gas += date + ',' + rec + ',' + remarks + '\n';
 			log.info("Date: " + date + " Record: " + rec + " Remarks: " + remarks);
 		}
 	}
 }
 
-/*
- * Add export button
- */
-var update_records_button = document.querySelector('a.meterstanden_doorgeven_button');
-update_records_button.parentNode.insertBefore(export_button, update_records_button);
+var gasExportLink = document.createElement('a');
+gasExportLink.innerHTML = 'Exporteren';
+gasExportLink.addEventListener('click', OnGasExportLinkClick);
+gasTable.querySelector('div.main').appendChild(gasExportLink);
