@@ -19,7 +19,7 @@ var csv_electricity = '';
 var csv_gas = '';
 
 var export_button = document.createElement('a');
-export_button.innerHTML = '<a id="ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenUserControl_ExporterenHyperlink" class="action_button_right xxxl meterstanden_doorgeven_button align_button_middle" href="#">Exporteren</a>'
+export_button.innerHTML = '<a id="ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenUserControl_ExporterenHyperlink" class="action_button_right xxxl meterstanden_doorgeven_button align_button_middle" href="#">Exporteren</a>';
 
 log.setLevel( "trace" );
 //log.setLevel("silent");
