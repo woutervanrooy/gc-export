@@ -7,7 +7,6 @@
 // @match       https://dossier.greenchoice.nl/Mijn-Dossier/Mijn-verbruik.aspx*
 // @copyright   2014, Wouter van Rooy
 // @require     https://raw.githubusercontent.com/pimterry/loglevel/master/dist/loglevel.min.js
-// @require		https://gist.github.com/raw/2625891/waitForKeyElements.js
 // ==/UserScript==
 
 var TAB_VIEW_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenLi';
