@@ -37,4 +37,4 @@ The easiest way to install the user script in your preferred browser is to drag 
 ### Install user script from repository
 Click the following link to directly install the GC-Export user script in your browser:
 
-* [Development version](https://dev.nullpointer.nl/energy/gc-export/blob/develop/gc-export.user.js)
+* [Development version](https://dev.nullpointer.nl/energy/gc-export/raw/develop/gc-export.user.js)
