@@ -157,13 +157,13 @@ function ParseGasTable()
                 var date_parsed = ParseDate(date);
 
                 // Re-calculate min/max date
-                if (elecMinDate == 0 || date_parsed < elecMinDate)
+                if (gasMinDate == 0 || date_parsed < gasMinDate)
                 {
-                    elecMinDate = date_parsed;
+                    gasMinDate = date_parsed;
                 }
-                if (elecMaxDate == 0 || date_parsed > elecMaxDate)
+                if (gasMaxDate == 0 || date_parsed > gasMaxDate)
                 {
-                    elecMaxDate = date_parsed;
+                    gasMaxDate = date_parsed;
                 }
 
                 // Add to CSV
