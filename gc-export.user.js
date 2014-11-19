@@ -112,9 +112,7 @@ function ParseElecTable()
     
     GM_log("Found " + elecRecordCount + " electricity records ranging from " + FormatDate(elecMinDate) + " to " + FormatDate(elecMaxDate));
 
-    // Add export link
-    var elecExportDiv = document.createElement('div');
-    elecExportDiv.className = 'export';
+    // Add export link    
     var elecExportLink = document.createElement('a');
     elecExportLink.innerHTML = 'Exporteren';
     elecExportLink.addEventListener('click', OnElecExportLinkClick);
