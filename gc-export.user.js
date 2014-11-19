@@ -14,6 +14,11 @@ const GAS_TABLE_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenUs
 var csv_electricity = '';
 var csv_gas = '';
 
+var elecMinDate = 0;
+var elecMaxDate = 0;
+var gasMinDate = 0;
+var gasMaxDate = 0;
+
 function downloadCSV(filename, text)
 {
     var pom = document.createElement('a');
@@ -30,6 +35,24 @@ function OnElecExportLinkClick()
 function OnGasExportLinkClick()
 {
     downloadCSV('gas.csv', csv_gas);
+}
+
+function ParseDate(dateString)
+{
+    // Parse [d]d-[m]m-yyyy into Date object
+    var chunks = dateString.split('-');
+    var d = parseInt(chunks[0]);
+    var m = parseInt(chunks[1]);
+    var y = parseInt(chunks[2]);
+    
+    return new Date(y, m-1, d);
+}
+
+function FormatDate(dateObject)
+{
+    // Parse Date object into [d]d-[m]m-yyyy
+    var dateString = dateObject.getDate() + "-" + (dateObject.getMonth()+1) + "-" + dateObject.getFullYear();
+    return dateString;
 }
 
 /*
@@ -63,14 +86,31 @@ function ParseElecTable()
                 var rec_hi  = fields[1].innerHTML;
                 var rec_lo  = fields[2].innerHTML;
                 var remarks = fields[3].innerHTML;
+                
+                var date_parsed = ParseDate(date);
 
+                // Re-calculate min/max date
+                if (elecMinDate == 0 || date_parsed < elecMinDate)
+                {
+                    elecMinDate = date_parsed;
+                }
+                if (elecMaxDate == 0 || date_parsed > elecMaxDate)
+                {
+                    elecMaxDate = date_parsed;
+                }
+
+                // Add to CSV
                 csv_electricity += date + ',' + rec_hi + ',' + rec_lo + ',' + remarks + '\n';
                 GM_log("Date: " + date + " High: " + rec_hi + " Low: " + rec_lo + " Remarks: " + remarks);
             }
         }
     }
+    
+    GM_log("Records range from " + FormatDate(elecMinDate) + " to " + FormatDate(elecMaxDate));
 
     // Add export link
+    var elecExportDiv = document.createElement('div');
+    elecExportDiv.className = 'export';
     var elecExportLink = document.createElement('a');
     elecExportLink.innerHTML = 'Exporteren';
     elecExportLink.addEventListener('click', OnElecExportLinkClick);
@@ -107,12 +147,27 @@ function ParseGasTable()
                 var date    = fields[0].innerHTML;
                 var rec     = fields[1].innerHTML;
                 var remarks = fields[2].innerHTML;
+                
+                var date_parsed = ParseDate(date);
 
+                // Re-calculate min/max date
+                if (elecMinDate == 0 || date_parsed < elecMinDate)
+                {
+                    elecMinDate = date_parsed;
+                }
+                if (elecMaxDate == 0 || date_parsed > elecMaxDate)
+                {
+                    elecMaxDate = date_parsed;
+                }
+
+                // Add to CSV
                 csv_gas += date + ',' + rec + ',' + remarks + '\n';
                 GM_log("Date: " + date + " Record: " + rec + " Remarks: " + remarks);
             }
         }
     }
+    
+    GM_log("Records range from " + FormatDate(gasMinDate) + " to " + FormatDate(gasMaxDate));
 
     // Add export link
     var gasExportLink = document.createElement('a');
