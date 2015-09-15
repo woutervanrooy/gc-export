@@ -1,32 +1,14 @@
-/*
- * This file is part of GC-Export.
- * 
- * GC-Export is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * Foobar is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 // ==UserScript==
 // @name        GreenChoice meter records export script
 // @namespace   https://dev.nullpointer.nl/energy/gc-export
 // @author      Wouter van Rooy
-// @version     1.1.0
+// @version     v1.0.1
 // @description This user script helps you export the meter records from your personal GreenChoice file.
 // @match       https://dossier.greenchoice.nl/Mijn-Dossier/Mijn-verbruik.aspx*
 // @match       https://dossier.greenchoice.nl/mijn-dossier/mijn-verbruik.aspx*
-// @grant       none 
 // @copyright   2014, Wouter van Rooy
 // ==/UserScript==
- 
+
 const ELEC_TABLE_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenUserControl_GeordendStandenOverzichtStroom';
 const GAS_TABLE_ID = 'ctl00_ctl00_Content_ContentRightPlaceholder_MeterstandenUserControl_GeordendStandenoverzichtGas';
 
@@ -82,23 +64,23 @@ function FormatDate(dateObject)
  */
 function ParseElecTable()
 {
-    console.log("Processing electricity meter records");
+    GM_log("Processing electricity meter records");
     var elecTable = document.getElementById(ELEC_TABLE_ID);
     var elecYears = elecTable.querySelector('ul').children;
-    //console.log("Found " + elecYears.length + " years");
+    //GM_log("Found " + elecYears.length + " years");
 
     for (var year = 0; year < elecYears.length; year++)
     {
         var elecYear = elecYears[year];
         var elecMonths = elecYear.querySelectorAll('ul');
-        //console.log("Found " + elecMonths.length + " months for year " + year);
+        //GM_log("Found " + elecMonths.length + " months for year " + year);
 
         for (var month = 0; month < elecMonths.length; month++)
         {
             var elecMonth = elecMonths[month];
             var elecRecords = elecMonth.querySelectorAll('div.row, div.alternating-row');
             elecRecordCount += elecRecords.length;
-            //console.log("Found " + elecRecords.length + " records for month " + month);
+            //GM_log("Found " + elecRecords.length + " records for month " + month);
 
             for (var record = 0; record < elecRecords.length; record++)
             {
@@ -124,12 +106,12 @@ function ParseElecTable()
 
                 // Add to CSV
                 csv_electricity += date + ',' + rec_hi + ',' + rec_lo + ',' + remarks + '\n';
-                //console.log("Date: " + date + " High: " + rec_hi + " Low: " + rec_lo + " Remarks: " + remarks);
+                //GM_log("Date: " + date + " High: " + rec_hi + " Low: " + rec_lo + " Remarks: " + remarks);
             }
         }
     }
     
-    console.log("Found " + elecRecordCount + " electricity records ranging from " + FormatDate(elecMinDate) + " to " + FormatDate(elecMaxDate));
+    GM_log("Found " + elecRecordCount + " electricity records ranging from " + FormatDate(elecMinDate) + " to " + FormatDate(elecMaxDate));
 
     // Add export link    
     var elecExportLink = document.createElement('a');
@@ -143,24 +125,24 @@ function ParseElecTable()
  */
 function ParseGasTable()
 {
-    console.log("Processing gas meter records");
+    GM_log("Processing gas meter records");
     var gasTable = document.getElementById(GAS_TABLE_ID);
     var gasYears = gasTable.querySelector('ul').children;
     
-    //console.log("Found " + gasYears.length + " years");
+    //GM_log("Found " + gasYears.length + " years");
 
     for (var year = 0; year < gasYears.length; year++)
     {
         var gasYear = gasYears[year];
         var gasMonths = gasYear.querySelectorAll('ul');
-        //console.log("Found " + gasMonths.length + " months for year " + year);
+        //GM_log("Found " + gasMonths.length + " months for year " + year);
 
         for (var month = 0; month < gasMonths.length; month++)
         {
             var gasMonth = gasMonths[month];
             var gasRecords = gasMonth.querySelectorAll('div.row, div.alternating-row');
             gasRecordCount += gasRecords.length;
-            //console.log("Found " + gasRecords.length + " records for month " + month);
+            //GM_log("Found " + gasRecords.length + " records for month " + month);
 
             for (var record = 0; record < gasRecords.length; record++)
             {
@@ -185,12 +167,12 @@ function ParseGasTable()
 
                 // Add to CSV
                 csv_gas += date + ',' + rec + ',' + remarks + '\n';
-                //console.log("Date: " + date + " Record: " + rec + " Remarks: " + remarks);
+                //GM_log("Date: " + date + " Record: " + rec + " Remarks: " + remarks);
             }
         }
     }
     
-    console.log("Found " + gasRecordCount + " gas records ranging from " + FormatDate(gasMinDate) + " to " + FormatDate(gasMaxDate));
+    GM_log("Found " + gasRecordCount + " gas records ranging from " + FormatDate(gasMinDate) + " to " + FormatDate(gasMaxDate));
 
     // Add export link
     var gasExportLink = document.createElement('a');
