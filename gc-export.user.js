@@ -19,7 +19,7 @@
 // @name        GreenChoice meter records export script
 // @namespace   https://dev.nullpointer.nl/energy/gc-export
 // @author      Wouter van Rooy
-// @version     1.0.2
+// @version     1.1.1
 // @description This user script helps you export the meter records from your personal GreenChoice file.
 // @match       http://dossier.greenchoice.nl/Mijn-Dossier/Mijn-verbruik.aspx*
 // @match       http://dossier.greenchoice.nl/mijn-dossier/mijn-verbruik.aspx*
