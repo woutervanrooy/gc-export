@@ -203,7 +203,7 @@ function ParseGasTable()
 
 
 // Wait for page to load before processing
-window.addEventListener('load', function() {
+setTimeout(function() {
     ParseElecTable();
     ParseGasTable();
-}, false);
+}, 100);
